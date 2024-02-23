@@ -17,6 +17,14 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4
 
+      - name: Extract tag name
+        run: |
+          echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      
+      - name: Print VERSION as $GITHUB_REF_NAME
+        run: |
+          echo "Name from VERSION 2 step: $VERSION"   
+
       - name: Run Python script
         run: |
-          python3 TriggerWorkers.py ${{ secrets.WORKER_ANDROID_SECRET }} 1.1
+          python3 TriggerWorkers.py ${{ secrets.WORKER_ANDROID_SECRET }} $VERSION
