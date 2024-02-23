@@ -2,13 +2,13 @@ import requests
 import sys
 
 
-def trigger_action(token, new_variable):
+def trigger_action(token, new_core_tag, repo):
     url = "https://api.github.com/repos/{owner}/{repo}/actions/workflows/{workflow_dispatch}/dispatches"
 
     payload = {
         "ref": "main",
         "inputs": {
-            "new_variable": new_variable
+            "new_core_tag": new_core_tag
         }
     }
 
@@ -17,8 +17,7 @@ def trigger_action(token, new_variable):
         "Accept": "application/vnd.github.v3+json"
     }
 
-    owner = "oleksandr-yakov"
-    repo = "worker"
+    owner = "oversecured"
     workflow_dispatch = "delivery-android.yml"
 
     response = requests.post(url.format(owner=owner, repo=repo, workflow_dispatch=workflow_dispatch),
@@ -37,6 +36,8 @@ if __name__ == "__main__":
         sys.exit(1)
 
     token = sys.argv[1]
-    new_variable = sys.argv[2]
+    new_core_tag = sys.argv[2]
+    repo = sys.argv[3]
+    if new_core_tag == "main": new_core_tag = "latest"
 
-    trigger_action(token, new_variable)
+    trigger_action(token, new_core_tag, repo)
