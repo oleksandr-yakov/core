@@ -1,0 +1,22 @@
+name: Continuous Delivery
+
+permissions:
+  id-token: write
+  contents: read
+
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - '*'
+
+jobs:
+  delivery:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Run Python script
+        run: |
+          python3 TriggerWorkers.py ${{ secrets.WORKER_ANDROID_SECRET }} 1.1
