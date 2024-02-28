@@ -32,8 +32,8 @@ def trigger_action(token, new_core_tag, repo):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 5:
-        print("Usage: python3 script.py <PAT> <new_core_tag> <saas_repo> <onprem_repo>")
+    if len(sys.argv) != 3:
+        print("Usage: python3 script.py <PAT> <new_core_tag> ")
         sys.exit(1)
 
     token = sys.argv[1]
