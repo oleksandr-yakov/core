@@ -17,27 +17,28 @@ def trigger_action(token, new_core_tag, repo):
         "Accept": "application/vnd.github.v3+json"
     }
 
-    owner = "oversecured"
+    owner = "oleksandr-yakov"
     workflow_dispatch = "delivery-android.yml"
 
     response = requests.post(url.format(owner=owner, repo=repo, workflow_dispatch=workflow_dispatch),
                              json=payload, headers=headers)
 
     if response.status_code == 204:
-        print("Action triggered")
+        print(f"Action triggered for {repo}")
     else:
-        print("Action triggered failed")
+        print(f"Action triggered failed for {repo}")
         print("Code Status:", response.status_code)
         print("Text error:", response.text)
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 5:
+        print("Usage: python3 script.py <PAT> <new_core_tag> <saas_repo> <onprem_repo>")
         sys.exit(1)
 
     token = sys.argv[1]
     new_core_tag = sys.argv[2]
-    repo = sys.argv[3]
-    if new_core_tag == "main": new_core_tag = "latest"
+    if new_core_tag == "main":
+        new_core_tag = "latest"
 
-    trigger_action(token, new_core_tag, repo)
+    trigger_action(token, new_core_tag, "worker")
