@@ -18,7 +18,7 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4
 
-      - name: Extract tag name
+      - name: Extract Tag name
         run: |
           echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
       
