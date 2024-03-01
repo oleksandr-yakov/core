@@ -41,4 +41,4 @@ if __name__ == "__main__":
     if new_core_tag == "main":
         new_core_tag = "latest"
 
-    trigger_action(token, new_core_tag, "worker")
+    trigger_action(token, new_core_tag, "worker-on-premise")
