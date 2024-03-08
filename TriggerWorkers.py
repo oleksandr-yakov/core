@@ -2,7 +2,6 @@ import requests
 import sys
 
 
-
 def trigger_action(token, new_core_tag, repo):
     url = "https://api.github.com/repos/{owner}/{repo}/actions/workflows/{workflow_dispatch}/dispatches"
 
@@ -42,4 +41,4 @@ if __name__ == "__main__":
     if new_core_tag == "main":
         new_core_tag = "latest"
 
-    trigger_action(token, new_core_tag, "worker-on-premise")
+    trigger_action(token, new_core_tag, "worker")
