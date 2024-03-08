@@ -2,7 +2,6 @@ import requests
 import sys
 
 
-
 def trigger_action(token, new_core_tag, repo):
     url = "https://api.github.com/repos/{owner}/{repo}/actions/workflows/{workflow_dispatch}/dispatches"
 
