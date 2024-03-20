@@ -24,7 +24,7 @@ jobs:
       - name: Set Environment Variable ENV
         run: |
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            echo "ENV=dev" >> $GITHUB_ENV
+            echo "REF=dev" >> $GITHUB_ENV
             echo "VERSION=latest" >> $GITHUB_ENV
           fi
 
@@ -34,4 +34,4 @@ jobs:
 
       - name: Run Python script
         run: |
-          python3 TriggerWorkers.py ${{ secrets.WORKER_ANDROID_SECRET }} $VERSION
+          python3 TriggerWorkers.py ${{ secrets.WORKER_ANDROID_SECRET }} $VERSION $REF
