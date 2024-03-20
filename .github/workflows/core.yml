@@ -31,6 +31,7 @@ jobs:
         #REF - dev or prod pushing worker to ecr
         #VERSION with this version will build worker
         #CORE_TAG pushing core  to ecr = tag 'latest'
+
       - name: Print VERSION as $GITHUB_REF_NAME
         run: |
           echo "REF: $REF"   
