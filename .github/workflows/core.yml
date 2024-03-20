@@ -26,6 +26,7 @@ jobs:
             echo "CORE_TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
           fi
 
+
         #REF - dev or prod pushing worker to ecr
         #VERSION with this version will build worker
         #CORE_TAG pushing core  to ecr = tag 'latest'
