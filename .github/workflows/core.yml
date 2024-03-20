@@ -19,6 +19,7 @@ jobs:
 
       - name: Extract Tag name
         run: |
+          echo ${GITHUB_REF##*/}
           echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
       - name: Set Environment Variable ENV
@@ -26,6 +27,8 @@ jobs:
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
             echo "REF=dev" >> $GITHUB_ENV
             echo "VERSION=latest" >> $GITHUB_ENV
+          else
+            echo "REF=prod" >> $GITHUB_ENV
           fi
 
       - name: Print VERSION as $GITHUB_REF_NAME
