@@ -17,23 +17,25 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4
 
-      - name: Extract Tag name
-        run: |
-          echo ${GITHUB_REF##*/}
-          echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
-
       - name: Set Environment Variable ENV
         run: |
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
             echo "REF=dev" >> $GITHUB_ENV
-            echo "VERSION=latest" >> $GITHUB_ENV
-          else
+            echo "CORE_TAG=latest" >> $GITHUB_ENV
+          elif [ "${GITHUB_REF##*/}" != "main" ]; then
             echo "REF=prod" >> $GITHUB_ENV
+            echo "CORE_TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
+            echo "VERSION=latest-tag" >> $GITHUB_ENV
           fi
 
+        #REF - dev or prod pushing worker to ecr
+        #VERSION with this version will build worker
+        #CORE_TAG pushing core  to ecr = tag 'latest'
       - name: Print VERSION as $GITHUB_REF_NAME
         run: |
-          echo "Name from VERSION 2 step: $VERSION"   
+          echo "REF: $REF"   
+          echo "VERSION: $VERSION"   
+          echo "CORE_TAG: $CORE_TAG"
 
       - name: Run Python script
         run: |
