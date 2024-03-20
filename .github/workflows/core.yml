@@ -23,7 +23,7 @@ jobs:
             echo "REF=dev" >> $GITHUB_ENV
             echo "VERSION=latest" >> $GITHUB_ENV
           elif [ "${GITHUB_REF##*/}" != "main" ]; then
-            echo "REF=prod" >> $GITHUB_ENV
+            echo "REF=main" >> $GITHUB_ENV
             echo "CORE_TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
             echo "VERSION=latest-tag" >> $GITHUB_ENV
           fi
