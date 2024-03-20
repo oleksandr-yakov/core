@@ -2,11 +2,11 @@ import requests
 import sys
 
 
-def trigger_action(token, new_core_tag, repo):
+def trigger_action(token, new_core_tag, repo, ref):
     url = "https://api.github.com/repos/{owner}/{repo}/actions/workflows/{workflow_dispatch}/dispatches"
 
     payload = {
-        "ref": "main",
+        "ref": ref,
         "inputs": {
             "new_core_tag": new_core_tag
         }
@@ -32,13 +32,14 @@ def trigger_action(token, new_core_tag, repo):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python3 script.py <PAT> <new_core_tag> ")
+    if len(sys.argv) != 4:
+        print("Usage: python3 script.py <PAT> <new_core_tag> <ref>")
         sys.exit(1)
 
     token = sys.argv[1]
     new_core_tag = sys.argv[2]
+    ref = sys.argv[3]
     if new_core_tag == "main":
         new_core_tag = "latest"
 
-    trigger_action(token, new_core_tag, "worker")
+    trigger_action(token, new_core_tag, "worker", ref)

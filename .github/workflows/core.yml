@@ -9,7 +9,6 @@ on:
     branches: [ main ]
     tags:
       - '*'
-      - '!*0'
 
 jobs:
   delivery:
@@ -21,7 +20,14 @@ jobs:
       - name: Extract Tag name
         run: |
           echo "VERSION=${GITHUB_REF##*/}" >> $GITHUB_ENV
-      
+
+      - name: Set Environment Variable ENV
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            echo "ENV=dev" >> $GITHUB_ENV
+            echo "VERSION=latest" >> $GITHUB_ENV
+          fi
+
       - name: Print VERSION as $GITHUB_REF_NAME
         run: |
           echo "Name from VERSION 2 step: $VERSION"   
