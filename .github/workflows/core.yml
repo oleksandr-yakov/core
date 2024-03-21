@@ -9,7 +9,8 @@ on:
     branches: [ main ]
     tags:
       - '*'
-
+env:
+  VERSION: latest
 jobs:
   delivery:
     runs-on: ubuntu-latest
@@ -24,18 +25,19 @@ jobs:
           elif [ "${GITHUB_REF##*/}" != "main" ]; then
             echo "REF=main" >> $GITHUB_ENV
             echo "CORE_TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
+            echo "VERSION=latest-tag" >> $GITHUB_ENV
           fi
 
 
         #REF - dev or prod pushing worker to ecr
         #VERSION with this version will build worker
         #CORE_TAG pushing core  to ecr = tag 'latest'
-      - name: Print VERSION as $GITHUB_REF_NAME
+      - name: Print All Useful data
         run: |
-          echo "REF: $REF"   
-          echo "VERSION: $VERSION"   
+          echo "REF: $REF"     
           echo "CORE_TAG: $CORE_TAG"
+          echo "VERSION: $VERSION" 
 
       - name: Run Python script
         run: |
-          python3 TriggerWorkers.py ${{ secrets.WORKER_ANDROID_SECRET }} $VERSION $REF
+          python3 TriggerWorkers.py ${{ secrets.WORKER_ANDROID_SECRET }}  $REF
