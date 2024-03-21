@@ -1,6 +1,7 @@
 import requests
 import sys
 
+
 def trigger_action(token, repo, ref):
     url = "https://api.github.com/repos/{owner}/{repo}/actions/workflows/{workflow_dispatch}/dispatches"
 
@@ -25,6 +26,7 @@ def trigger_action(token, repo, ref):
         print(f"Action triggered failed for {repo}")
         print("Code Status:", response.status_code)
         print("Text error:", response.text)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
