@@ -9,8 +9,7 @@ on:
     branches: [ main ]
     tags:
       - '*'
-env:
-  VERSION: latest
+
 jobs:
   delivery:
     runs-on: ubuntu-latest
@@ -22,12 +21,21 @@ jobs:
         run: |
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
             echo "REF=dev" >> $GITHUB_ENV
+            echo "VERSION=latest" >> $GITHUB_ENV
           elif [ "${GITHUB_REF##*/}" != "main" ]; then
             echo "REF=main" >> $GITHUB_ENV
             echo "CORE_TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
             echo "VERSION=latest-tag" >> $GITHUB_ENV
           fi
 
+      - name: Docker manifest default
+        run: |
+          echo "  docker manifest create registry.repo.image:$VERSION"
+
+      - name: Docker manifest TAG
+        if: env.VERSION == 'latest-tag'
+        run: |
+          echo "docker manifest create registry.repo.image:$CORE_TAG"
 
         #REF - dev or prod pushing worker to ecr
         #VERSION with this version will build worker
